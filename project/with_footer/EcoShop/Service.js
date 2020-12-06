@@ -1,0 +1,3947 @@
+let array = [];
+let totalRecords = 0;
+let totalPages = 0;
+let displayRecords = [];
+let recPerPage = 5;
+let _this = "";
+
+$(document).ready(function () {
+  $("#Navigation").click(
+    function () { 
+      $("#HomeDropdown").css("visibility","hidden");
+      $("#RecycleDropdown").css("visibility","hidden");
+      $('#Main').toggle();
+});       
+
+$("#Main").hide(); 
+
+//-------------------------------------------------------------------- 
+$("#Account").mouseover(function(){
+      $("#HomeDropdown").css("visibility","visible");
+      $("#RecycleDropdown").css("visibility","hidden");
+});
+$("#HomeDropdown").mouseleave (function(){
+      $("#HomeDropdown").css("visibility","hidden");
+});
+//-------------------------------------------------------------------- 
+$("#System").mouseover(function(){
+      $("#RecycleDropdown").css("visibility","visible");
+      $("#HomeDropdown").css("visibility","hidden");
+});
+//--------------------------------------------------------------------
+$("#RecycleDropdown").mouseleave (function(){
+      $("#RecycleDropdown").css("visibility","hidden");
+});
+//-------------------------------------------------------------------
+$("#EcoShop").mouseover(function(){
+      $("#HomeDropdown").css("visibility","hidden");
+      $("#RecycleDropdown").css("visibility","hidden");
+});
+//-------------------------------------------------------------------
+$("#Scanner").mouseover(function(){
+      $("#HomeDropdown").css("visibility","hidden");
+      $("#RecycleDropdown").css("visibility","hidden");
+});   
+
+  // $.ajax({
+  // url:  "https://cors-anywhere.herokuapp.com/https://www2.hm.com/en_gb/search-results/_jcr_content/search.display.json?q=jeans"
+  // }).done(function (data) {
+  //   array = data.products;
+  //   totalRecords = array.length;
+  //   totalPages = Math.ceil(totalRecords / recPerPage);
+  //   for (var index = 1; index <= totalPages; index++) {
+  //       $("#app").append(`<div id=${index} class="button" onClick="showData(${index})"></div>`);
+  //   }
+  //   showData(1)
+  // });
+
+  array = array.products;
+  totalRecords = array.length;
+  totalPages = Math.ceil(totalRecords / recPerPage);
+  for (var index = 1; index <= totalPages; index++) {
+    $("#app").append(
+      `<div id=${index} class="button" onClick="showData(${index})"></div>`
+    );
+  }
+  showData(1);
+});
+
+function showData(page) {
+  button = $(".button");
+  switchToNext();
+  button.on("click", switchToNext);
+  let displayRecordsIndex = Math.max(page - 1, 0) * recPerPage;
+  let endRec = displayRecordsIndex + recPerPage;
+  displayRecords = array.slice(displayRecordsIndex, endRec);
+  $("#autoWidth").html(" ");
+  for (var i = 0; i <= 10; i++) {
+    displayRecordsIndex++;
+    $("#autoWidth").append(`
+    <li class="item-a">
+        <div class="box">
+          <div class="slide-img">
+      <img src=http://${displayRecords[i].image[0].src} id=${displayRecordsIndex}/>
+      <div class="overlay">
+              <a id=${displayRecordsIndex} onClick="showDetails(${displayRecordsIndex})" class="buy-btn">Details</a>
+            </div>
+          </div>
+        </div>
+      </li>
+      
+      `);
+  }
+}
+
+function enableButton(size){
+  $(".color").removeClass('active')
+  $("#"+size).toggleClass('active');
+
+};
+
+function showDetails(index) {
+  let imageObject = array[index-1];
+  $(".modal-body").html(" ");
+  $(".title").html(" ");
+  $(".modal-header").append(`<h2 class="title">${imageObject.title}</h2>`); 
+  $(".modal-body").append(`<p id="price">Price: ${imageObject.price}</p>`);
+  $(".modal-body").append(`<p class="size">Size: </p>`);
+  $(".modal-body").append(`<div class="size-value">
+  <ul class="ulButtons">
+  <li class="liButtons"><button class="color" id="XS" onClick="enableButton('XS')">XS</button></li>
+  <li class="liButtons"><button class="color" id="S" onClick="enableButton('S')">S</button></li>
+  <li class="liButtons"><button class="color" id="M" onClick="enableButton('M')">M</button></li>
+  <li class="liButtons"><button class="color" id="L" onClick="enableButton('L')">L</button></li>
+  <li class="liButtons"><button class="color" id="XL" onClick="enableButton('XL')">XL</button></li>
+  </ul>
+</div>`);
+ $(".modal-body").append(`<p class="delivery">Delivery: £3.50</p>`);
+ $(".modal-body").append(`<a href="#" class="addToCart"><i class="fas fa-heart"></i>Add To Favourites</a>`);
+ $(".modal-body").append(`<a href="#" class="review"><i class="fas fa-pen"></i>Write a review!</a>`);
+ $(".modal-body").append(`<a href="#" class="buy"><i class="fas fa-shopping-cart"></i>Buy Now!</a>`);
+
+
+  
+  document.getElementById("myModal").style.display = "block";
+
+
+
+  document.getElementsByClassName("close")[0].onclick = function () {
+    document.getElementById("myModal").style.display = "none";
+  };
+  window.onclick = function (event) {
+    if (event.target == document.getElementById("myModal")) {
+      document.getElementById("myModal").style.display = "none";
+    }
+  };
+}
+
+function switchToNext() {
+  var _this = $(this);
+  if (_this.hasClass("active")) return false;
+  else {
+    $(".button.active").removeClass("active");
+    _this.addClass("active");
+  }
+}
+
+
+(function () {
+  array = {
+    total: 625,
+    itemsShown: 40,
+    filters: [
+      {
+        id: "sizes",
+        name: "Size",
+        group: [
+          {
+            id: "womenswear",
+            name: "Womenswear",
+            filtervalues: [
+              {
+                name: "xxs",
+                id: "293xxs1womenswear",
+                filtercount: 145,
+                code: "293_xxs_1_womenswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "xs",
+                id: "299xs1womenswear",
+                filtercount: 161,
+                code: "299_xs_1_womenswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "s",
+                id: "302s1womenswear",
+                filtercount: 161,
+                code: "302_s_1_womenswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "m",
+                id: "305m1womenswear",
+                filtercount: 129,
+                code: "305_m_1_womenswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "l",
+                id: "306l1womenswear",
+                filtercount: 183,
+                code: "306_l_1_womenswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "xl",
+                id: "308xl1womenswear",
+                filtercount: 210,
+                code: "308_xl_1_womenswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "2xl",
+                id: "3122xl1womenswear",
+                filtercount: 75,
+                code: "312_2xl_1_womenswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "3xl",
+                id: "3173xl1womenswear",
+                filtercount: 40,
+                code: "317_3xl_1_womenswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "4xl",
+                id: "3204xl1womenswear",
+                filtercount: 20,
+                code: "320_4xl_1_womenswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "xxs/p (petite)",
+                id: "336xxsppetite1womenswear",
+                filtercount: 53,
+                code: "336_xxs%2Fp+%28petite%29_1_womenswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "xs/p (petite)",
+                id: "341xsppetite1womenswear",
+                filtercount: 47,
+                code: "341_xs%2Fp+%28petite%29_1_womenswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "s/p (petite)",
+                id: "344sppetite1womenswear",
+                filtercount: 42,
+                code: "344_s%2Fp+%28petite%29_1_womenswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "m/p (petite)",
+                id: "347mppetite1womenswear",
+                filtercount: 43,
+                code: "347_m%2Fp+%28petite%29_1_womenswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "l/p (petite)",
+                id: "348lppetite1womenswear",
+                filtercount: 48,
+                code: "348_l%2Fp+%28petite%29_1_womenswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "xl/p (petite)",
+                id: "350xlppetite1womenswear",
+                filtercount: 35,
+                code: "350_xl%2Fp+%28petite%29_1_womenswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "2xl/p (petite)",
+                id: "3542xlppetite1womenswear",
+                filtercount: 21,
+                code: "354_2xl%2Fp+%28petite%29_1_womenswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "3xl/p (petite)",
+                id: "3593xlppetite1womenswear",
+                filtercount: 1,
+                code: "359_3xl%2Fp+%28petite%29_1_womenswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "4xl/p (petite)",
+                id: "3624xlppetite1womenswear",
+                filtercount: 1,
+                code: "362_4xl%2Fp+%28petite%29_1_womenswear",
+                selected: false,
+                disabled: false,
+              },
+            ],
+          },
+          {
+            id: "menswear",
+            name: "Menswear",
+            filtervalues: [
+              {
+                name: "xs",
+                id: "299xs3menswear",
+                filtercount: 5,
+                code: "299_xs_3_menswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "s",
+                id: "302s3menswear",
+                filtercount: 5,
+                code: "302_s_3_menswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "m",
+                id: "305m3menswear",
+                filtercount: 1,
+                code: "305_m_3_menswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "l",
+                id: "306l3menswear",
+                filtercount: 3,
+                code: "306_l_3_menswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "xl",
+                id: "308xl3menswear",
+                filtercount: 2,
+                code: "308_xl_3_menswear",
+                selected: false,
+                disabled: false,
+              },
+            ],
+          },
+          {
+            id: "kidswear",
+            name: "Kidswear",
+            filtervalues: [
+              {
+                name: "0m",
+                id: "10180m4kidswear",
+                filtercount: 1,
+                code: "1018_0m_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "1m",
+                id: "10191m4kidswear",
+                filtercount: 1,
+                code: "1019_1m_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "4m",
+                id: "10224m4kidswear",
+                filtercount: 12,
+                code: "1022_4m_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "5m",
+                id: "10235m4kidswear",
+                filtercount: 12,
+                code: "1023_5m_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "6m",
+                id: "10246m4kidswear",
+                filtercount: 15,
+                code: "1024_6m_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "7m",
+                id: "10257m4kidswear",
+                filtercount: 11,
+                code: "1025_7m_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "8m",
+                id: "10268m4kidswear",
+                filtercount: 11,
+                code: "1026_8m_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "9m",
+                id: "10279m4kidswear",
+                filtercount: 12,
+                code: "1027_9m_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "10m",
+                id: "102810m4kidswear",
+                filtercount: 8,
+                code: "1028_10m_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "11m",
+                id: "102911m4kidswear",
+                filtercount: 8,
+                code: "1029_11m_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "12m",
+                id: "103012m4kidswear",
+                filtercount: 9,
+                code: "1030_12m_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "13m",
+                id: "103113m4kidswear",
+                filtercount: 8,
+                code: "1031_13m_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "14m",
+                id: "103214m4kidswear",
+                filtercount: 8,
+                code: "1032_14m_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "15m",
+                id: "103315m4kidswear",
+                filtercount: 8,
+                code: "1033_15m_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "16m",
+                id: "103416m4kidswear",
+                filtercount: 8,
+                code: "1034_16m_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "17m",
+                id: "103517m4kidswear",
+                filtercount: 8,
+                code: "1035_17m_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "18m",
+                id: "103618m4kidswear",
+                filtercount: 8,
+                code: "1036_18m_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "1y",
+                id: "10371y4kidswear",
+                filtercount: 57,
+                code: "1037_1y_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "2y",
+                id: "10382y4kidswear",
+                filtercount: 58,
+                code: "1038_2y_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "3y",
+                id: "10393y4kidswear",
+                filtercount: 44,
+                code: "1039_3y_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "4y",
+                id: "10404y4kidswear",
+                filtercount: 37,
+                code: "1040_4y_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "5y",
+                id: "10415y4kidswear",
+                filtercount: 30,
+                code: "1041_5y_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "6y",
+                id: "10426y4kidswear",
+                filtercount: 36,
+                code: "1042_6y_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "7y",
+                id: "10437y4kidswear",
+                filtercount: 36,
+                code: "1043_7y_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "8y",
+                id: "10448y4kidswear",
+                filtercount: 66,
+                code: "1044_8y_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "9y",
+                id: "10459y4kidswear",
+                filtercount: 55,
+                code: "1045_9y_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "10y",
+                id: "104610y4kidswear",
+                filtercount: 58,
+                code: "1046_10y_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "11y",
+                id: "104711y4kidswear",
+                filtercount: 37,
+                code: "1047_11y_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "12y",
+                id: "104812y4kidswear",
+                filtercount: 38,
+                code: "1048_12y_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "13y",
+                id: "104913y4kidswear",
+                filtercount: 42,
+                code: "1049_13y_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "14y",
+                id: "105014y4kidswear",
+                filtercount: 37,
+                code: "1050_14y_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "14y+",
+                id: "105114y4kidswear",
+                filtercount: 38,
+                code: "1051_14y%2B_4_kidswear",
+                selected: false,
+                disabled: false,
+              },
+            ],
+          },
+          {
+            id: "waist_inches",
+            name: "Waist (inches)",
+            filtervalues: [
+              {
+                name: "24",
+                id: "41245waist",
+                filtercount: 12,
+                code: "41_24_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "25",
+                id: "42255waist",
+                filtercount: 12,
+                code: "42_25_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "26",
+                id: "43265waist",
+                filtercount: 10,
+                code: "43_26_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "27",
+                id: "44275waist",
+                filtercount: 8,
+                code: "44_27_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "28",
+                id: "45285waist",
+                filtercount: 29,
+                code: "45_28_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "29",
+                id: "46295waist",
+                filtercount: 40,
+                code: "46_29_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "30",
+                id: "47305waist",
+                filtercount: 43,
+                code: "47_30_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "31",
+                id: "48315waist",
+                filtercount: 43,
+                code: "48_31_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "32",
+                id: "49325waist",
+                filtercount: 32,
+                code: "49_32_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "33",
+                id: "50335waist",
+                filtercount: 30,
+                code: "50_33_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "34",
+                id: "51345waist",
+                filtercount: 34,
+                code: "51_34_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "36",
+                id: "53365waist",
+                filtercount: 33,
+                code: "53_36_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "38",
+                id: "55385waist",
+                filtercount: 40,
+                code: "55_38_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "40",
+                id: "57405waist",
+                filtercount: 33,
+                code: "57_40_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "42",
+                id: "59425waist",
+                filtercount: 3,
+                code: "59_42_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "26/30",
+                id: "86026305waist",
+                filtercount: 1,
+                code: "860_26%2F30_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "26/32",
+                id: "86126325waist",
+                filtercount: 2,
+                code: "861_26%2F32_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "27/30",
+                id: "86427305waist",
+                filtercount: 4,
+                code: "864_27%2F30_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "27/32",
+                id: "86527325waist",
+                filtercount: 1,
+                code: "865_27%2F32_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "28/30",
+                id: "86828305waist",
+                filtercount: 14,
+                code: "868_28%2F30_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "28/32",
+                id: "86928325waist",
+                filtercount: 25,
+                code: "869_28%2F32_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "29/30",
+                id: "87229305waist",
+                filtercount: 21,
+                code: "872_29%2F30_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "29/32",
+                id: "87329325waist",
+                filtercount: 23,
+                code: "873_29%2F32_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "30/30",
+                id: "87630305waist",
+                filtercount: 27,
+                code: "876_30%2F30_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "30/32",
+                id: "87730325waist",
+                filtercount: 20,
+                code: "877_30%2F32_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "30/34",
+                id: "87830345waist",
+                filtercount: 10,
+                code: "878_30%2F34_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "31/30",
+                id: "88031305waist",
+                filtercount: 25,
+                code: "880_31%2F30_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "31/32",
+                id: "88131325waist",
+                filtercount: 16,
+                code: "881_31%2F32_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "31/34",
+                id: "88231345waist",
+                filtercount: 8,
+                code: "882_31%2F34_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "32/30",
+                id: "88432305waist",
+                filtercount: 12,
+                code: "884_32%2F30_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "32/32",
+                id: "88532325waist",
+                filtercount: 19,
+                code: "885_32%2F32_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "32/34",
+                id: "88632345waist",
+                filtercount: 5,
+                code: "886_32%2F34_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "33/30",
+                id: "88833305waist",
+                filtercount: 14,
+                code: "888_33%2F30_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "33/32",
+                id: "88933325waist",
+                filtercount: 16,
+                code: "889_33%2F32_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "33/34",
+                id: "89033345waist",
+                filtercount: 8,
+                code: "890_33%2F34_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "34/30",
+                id: "89234305waist",
+                filtercount: 11,
+                code: "892_34%2F30_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "34/32",
+                id: "89334325waist",
+                filtercount: 27,
+                code: "893_34%2F32_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "34/34",
+                id: "89434345waist",
+                filtercount: 8,
+                code: "894_34%2F34_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "36/30",
+                id: "89636305waist",
+                filtercount: 6,
+                code: "896_36%2F30_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "36/32",
+                id: "89736325waist",
+                filtercount: 22,
+                code: "897_36%2F32_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "36/34",
+                id: "89836345waist",
+                filtercount: 6,
+                code: "898_36%2F34_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "38/32",
+                id: "90138325waist",
+                filtercount: 35,
+                code: "901_38%2F32_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "38/34",
+                id: "90238345waist",
+                filtercount: 20,
+                code: "902_38%2F34_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "40/32",
+                id: "90540325waist",
+                filtercount: 32,
+                code: "905_40%2F32_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "40/34",
+                id: "90640345waist",
+                filtercount: 1,
+                code: "906_40%2F34_5_waist",
+                selected: false,
+                disabled: false,
+              },
+              {
+                name: "42/34",
+                id: "91042345waist",
+                filtercount: 3,
+                code: "910_42%2F34_5_waist",
+                selected: false,
+                disabled: false,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: "colorWithNames",
+        name: "Colour",
+        filtervalues: [
+          {
+            name: "Beige",
+            id: "beigef5f5dc",
+            color: "f5f5dc",
+            filtercount: 4,
+            code: "beige_f5f5dc",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Black",
+            id: "black000000",
+            color: "000000",
+            filtercount: 142,
+            code: "black_000000",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Blue",
+            id: "blue0000ff",
+            color: "0000ff",
+            filtercount: 392,
+            code: "blue_0000ff",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Green",
+            id: "green008000",
+            color: "008000",
+            filtercount: 5,
+            code: "green_008000",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Grey",
+            id: "grey808080",
+            color: "808080",
+            filtercount: 67,
+            code: "grey_808080",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Multi",
+            id: "multi000000",
+            color: "000000",
+            filtercount: 8,
+            code: "multi_000000",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Orange",
+            id: "orangeffa500",
+            color: "ffa500",
+            filtercount: 1,
+            code: "orange_ffa500",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Pink",
+            id: "pinkffc0cb",
+            color: "ffc0cb",
+            filtercount: 3,
+            code: "pink_ffc0cb",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "White",
+            id: "whiteffffff",
+            color: "ffffff",
+            filtercount: 19,
+            code: "white_ffffff",
+            selected: false,
+            disabled: false,
+          },
+        ],
+      },
+      {
+        id: "patterns",
+        name: "Pattern",
+        filtervalues: [
+          {
+            name: "patterned",
+            id: "patterned",
+            filtercount: 2,
+            code: "patterned",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "solid colour",
+            id: "solidcolour",
+            filtercount: 544,
+            code: "solid+colour",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "spotted",
+            id: "spotted",
+            filtercount: 2,
+            code: "spotted",
+            selected: false,
+            disabled: false,
+          },
+        ],
+      },
+      {
+        id: "productTypes",
+        name: "Product Type",
+        filtervalues: [
+          {
+            name: "Jeans",
+            id: "jeans",
+            filtercount: 616,
+            code: "Jeans",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Trousers",
+            id: "trousers",
+            filtercount: 10,
+            code: "Trousers",
+            selected: false,
+            disabled: false,
+          },
+        ],
+      },
+      {
+        id: "clothingStyles",
+        name: "Style",
+        filtervalues: [
+          {
+            name: "Biker",
+            id: "biker",
+            filtercount: 5,
+            code: "Biker",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Bootcut",
+            id: "bootcut",
+            filtercount: 6,
+            code: "Bootcut",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Boyfriend",
+            id: "boyfriend",
+            filtercount: 7,
+            code: "Boyfriend",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Cargo",
+            id: "cargo",
+            filtercount: 7,
+            code: "Cargo",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Culottes",
+            id: "culottes",
+            filtercount: 3,
+            code: "Culottes",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Dungarees",
+            id: "dungarees",
+            filtercount: 1,
+            code: "Dungarees",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Flared",
+            id: "flared",
+            filtercount: 4,
+            code: "Flared",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Girlfriend",
+            id: "girlfriend",
+            filtercount: 10,
+            code: "Girlfriend",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Joggers",
+            id: "joggers",
+            filtercount: 13,
+            code: "Joggers",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Mom",
+            id: "mom",
+            filtercount: 56,
+            code: "Mom",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Paper bag",
+            id: "paperbag",
+            filtercount: 11,
+            code: "Paper+bag",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Pull-on trousers",
+            id: "pull-ontrousers",
+            filtercount: 4,
+            code: "Pull-on+trousers",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Straight leg",
+            id: "straightleg",
+            filtercount: 72,
+            code: "Straight+leg",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Tapered",
+            id: "tapered",
+            filtercount: 82,
+            code: "Tapered",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Trashed",
+            id: "trashed",
+            filtercount: 34,
+            code: "Trashed",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Wide",
+            id: "wide",
+            filtercount: 16,
+            code: "Wide",
+            selected: false,
+            disabled: false,
+          },
+        ],
+      },
+      {
+        id: "waistRises",
+        name: "Waist Rise",
+        filtervalues: [
+          {
+            name: "High waist",
+            id: "highwaist",
+            filtercount: 281,
+            code: "High+waist",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Low waist",
+            id: "lowwaist",
+            filtercount: 22,
+            code: "Low+waist",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Regular waist",
+            id: "regularwaist",
+            filtercount: 140,
+            code: "Regular+waist",
+            selected: false,
+            disabled: false,
+          },
+        ],
+      },
+      {
+        id: "garmentLengths",
+        name: "Length",
+        filtervalues: [
+          {
+            name: "Ankle length",
+            id: "anklelength",
+            filtercount: 226,
+            code: "Ankle+length",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Long",
+            id: "long",
+            filtercount: 376,
+            code: "Long",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Short",
+            id: "short",
+            filtercount: 1,
+            code: "Short",
+            selected: false,
+            disabled: false,
+          },
+        ],
+      },
+      {
+        id: "fits",
+        name: "Fit",
+        filtervalues: [
+          {
+            name: "Loose fit",
+            id: "loosefit",
+            filtercount: 15,
+            code: "Loose+fit",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Regular fit",
+            id: "regularfit",
+            filtercount: 21,
+            code: "Regular+fit",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Relaxed fit",
+            id: "relaxedfit",
+            filtercount: 21,
+            code: "Relaxed+fit",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Skinny fit",
+            id: "skinnyfit",
+            filtercount: 231,
+            code: "Skinny+fit",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Slim fit",
+            id: "slimfit",
+            filtercount: 103,
+            code: "Slim+fit",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Super skinny fit",
+            id: "superskinnyfit",
+            filtercount: 71,
+            code: "Super+skinny+fit",
+            selected: false,
+            disabled: false,
+          },
+        ],
+      },
+      {
+        id: "contexts",
+        name: "Occasion",
+        filtervalues: [
+          {
+            name: "Casual",
+            id: "casual",
+            filtercount: 447,
+            code: "Casual",
+            selected: false,
+            disabled: false,
+          },
+        ],
+      },
+      {
+        id: "concepts",
+        name: "Concept",
+        filtervalues: [
+          {
+            name: "BABY EXCLUSIVE",
+            id: "babyexclusive",
+            filtercount: 1,
+            code: "BABY+EXCLUSIVE",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "DENIM",
+            id: "denim",
+            filtercount: 344,
+            code: "DENIM",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "DIVIDED",
+            id: "divided",
+            filtercount: 182,
+            code: "DIVIDED",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "EVERYDAY FASHION",
+            id: "everydayfashion",
+            filtercount: 23,
+            code: "EVERYDAY+FASHION",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "H&M MAN",
+            id: "hmman",
+            filtercount: 4,
+            code: "H%26M+MAN",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "H&M+",
+            id: "hm",
+            filtercount: 48,
+            code: "H%26M%2B",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "L.O.G.G.",
+            id: "logg",
+            filtercount: 2,
+            code: "L.O.G.G.",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "MAMA",
+            id: "mama",
+            filtercount: 62,
+            code: "MAMA",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "MODERN CLASSIC",
+            id: "modernclassic",
+            filtercount: 2,
+            code: "MODERN+CLASSIC",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "TREND",
+            id: "trend",
+            filtercount: 18,
+            code: "TREND",
+            selected: false,
+            disabled: false,
+          },
+        ],
+      },
+      {
+        id: "qualities",
+        name: "Quality",
+        filtervalues: [
+          {
+            name: "Conscious",
+            id: "1conscious",
+            filtercount: 50,
+            code: "1_Conscious",
+            selected: false,
+            disabled: false,
+          },
+          {
+            name: "Premium Quality",
+            id: "2premiumquality",
+            filtercount: 32,
+            code: "2_Premium+Quality",
+            selected: false,
+            disabled: false,
+          },
+        ],
+      },
+    ],
+    sortby: {
+      id: "sort",
+      name: "Sort by",
+      filtervalues: [
+        {
+          name: "Recommended",
+          id: "sort-stock",
+          code: "stock",
+          selected: true,
+        },
+        {
+          name: "Newest",
+          id: "sort-newProduct",
+          code: "newProduct",
+          selected: false,
+        },
+        {
+          name: "Lowest Price",
+          id: "sort-ascPrice",
+          code: "ascPrice",
+          selected: false,
+        },
+        {
+          name: "Highest Price",
+          id: "sort-descPrice",
+          code: "descPrice",
+          selected: false,
+        },
+      ],
+    },
+    products: [
+      {
+        articleCode: "0706016001",
+        onClick:
+          "setVCParameter('SEARCH','0706016001'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA3MDYwMTZfZ3JvdXBfMDAxX2VuX2diOzA3MDYwMTYwMDFfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0706016001'); setOsaParameters(utag_data.category_id,'SMALL','0706016001');",
+        link: "/en_gb/productpage.0706016001.html",
+        title: "Super Skinny High Jeans",
+        category: "ladies_jeans_skinny_skinnyhigh",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/36/1c/361c32b4babe40defb697b9f8b7d113024748434.jpg],origin[dam],category[ladies_jeans_skinny_skinnyhigh],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/7c/6e/7c6ed6bf87f52c540d8d56b591a99f62557ad928.jpg],origin[dam],category[ladies_jeans_skinny_skinnyhigh],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Super Skinny High Jeans Model",
+            dataAltText: "Super Skinny High Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking:
+          "Favourites|0706016001|Super Skinny High Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£14.99",
+        redPrice: "£11.99",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "14",
+        swatches: [
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0706016001.html",
+            colorName: "Black",
+          },
+          {
+            colorCode: "#8098CA",
+            articleLink: "/en_gb/productpage.0706016002.html",
+            colorName: "Light denim blue",
+          },
+          {
+            colorCode: "#54586D",
+            articleLink: "/en_gb/productpage.0706016003.html",
+            colorName: "Dark denim blue",
+          },
+          {
+            colorCode: "#333860",
+            articleLink: "/en_gb/productpage.0706016006.html",
+            colorName: "Denim blue",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0309864002",
+        onClick:
+          "setVCParameter('SEARCH','0309864002'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzAzMDk4NjRfZ3JvdXBfMDAyX2VuX2diOzAzMDk4NjQwMDJfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0309864002'); setOsaParameters(utag_data.category_id,'SMALL','0309864002');",
+        link: "/en_gb/productpage.0309864002.html",
+        title: "Skinny Fit Jeans",
+        category: "kids_boys14y_jeans_skinny",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/48/f3/48f31b7e79729d79137d64c69b52800251b09a4f.jpg],origin[dam],category[kids_boys14y_jeans_skinny],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/3b/32/3b3235048fffe1cad32726a2dd07ab05f6bb145b.jpg],origin[dam],category[kids_boys14y_jeans_skinny],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Skinny Fit Jeans Model",
+            dataAltText: "Skinny Fit Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: true,
+        favouritesTracking: "Favourites|0309864002|Skinny Fit Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£7.99",
+        redPrice: "£6.39",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "4",
+        swatches: [
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0309864002.html",
+            colorName: "Black",
+          },
+          {
+            colorCode: "#4C5164",
+            articleLink: "/en_gb/productpage.0309864012.html",
+            colorName: "Denim blue",
+          },
+          {
+            colorCode: "#94989F",
+            articleLink: "/en_gb/productpage.0309864013.html",
+            colorName: "Light grey",
+          },
+          {
+            colorCode: "#79829D",
+            articleLink: "/en_gb/productpage.0309864016.html",
+            colorName: "Blue",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0720504001",
+        onClick:
+          "setVCParameter('SEARCH','0720504001'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA3MjA1MDRfZ3JvdXBfMDAxX2VuX2diOzA3MjA1MDQwMDFfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0720504001'); setOsaParameters(utag_data.category_id,'SMALL','0720504001');",
+        link: "/en_gb/productpage.0720504001.html",
+        title: "Skinny Jeans",
+        category: "men_jeans_skinny",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/d7/76/d7765d7300eef058455dbbb9e719dacf669801de.jpg],origin[dam],category[men_jeans_skinny],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/5d/0d/5d0d93e035dba0a9a40f1c93e35ba0d33ea02822.jpg],origin[dam],category[men_jeans_skinny],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Skinny Jeans Model",
+            dataAltText: "Skinny Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: true,
+        favouritesTracking: "Favourites|0720504001|Skinny Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£17.99",
+        redPrice: "£14.39",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "6",
+        swatches: [
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0720504001.html",
+            colorName: "Black",
+          },
+          {
+            colorCode: "#4C5164",
+            articleLink: "/en_gb/productpage.0720504002.html",
+            colorName: "Dark denim blue",
+          },
+          {
+            colorCode: "#7187BC",
+            articleLink: "/en_gb/productpage.0720504007.html",
+            colorName: "Midnight blue",
+          },
+          {
+            colorCode: "#666B75",
+            articleLink: "/en_gb/productpage.0720504008.html",
+            colorName: "Dark grey",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0706016003",
+        onClick:
+          "setVCParameter('SEARCH','0706016003'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA3MDYwMTZfZ3JvdXBfMDAzX2VuX2diOzA3MDYwMTYwMDNfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0706016003'); setOsaParameters(utag_data.category_id,'SMALL','0706016003');",
+        link: "/en_gb/productpage.0706016003.html",
+        title: "Super Skinny High Jeans",
+        category: "ladies_jeans_skinny_skinnyhigh",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/02/64/026446edba3d5f712dfcaebae898e525224d5a41.jpg],origin[dam],category[ladies_jeans_skinny_skinnyhigh],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/3e/5c/3e5c932099cb4347884b4fc304b289cc659a66b6.jpg],origin[dam],category[ladies_jeans_skinny_skinnyhigh],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Super Skinny High Jeans Model",
+            dataAltText: "Super Skinny High Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking:
+          "Favourites|0706016003|Super Skinny High Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£14.99",
+        redPrice: "£11.99",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "14",
+        swatches: [
+          {
+            colorCode: "#54586D",
+            articleLink: "/en_gb/productpage.0706016003.html",
+            colorName: "Dark denim blue",
+          },
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0706016001.html",
+            colorName: "Black",
+          },
+          {
+            colorCode: "#8098CA",
+            articleLink: "/en_gb/productpage.0706016002.html",
+            colorName: "Light denim blue",
+          },
+          {
+            colorCode: "#333860",
+            articleLink: "/en_gb/productpage.0706016006.html",
+            colorName: "Denim blue",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0636207006",
+        onClick:
+          "setVCParameter('SEARCH','0636207006'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA2MzYyMDdfZ3JvdXBfMDA2X2VuX2diOzA2MzYyMDcwMDZfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0636207006'); setOsaParameters(utag_data.category_id,'SMALL','0636207006');",
+        link: "/en_gb/productpage.0636207006.html",
+        title: "Slim Jeans",
+        category: "men_jeans_slim",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/78/82/7882c685f36b76664a540d8c39fc721474183670.jpg],origin[dam],category[men_jeans_slim],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/cb/05/cb05c1b698d7d23cea43a5c8cf49629fa6b2c98c.jpg],origin[dam],category[men_jeans_slim],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Slim Jeans Model",
+            dataAltText: "Slim Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: true,
+        favouritesTracking: "Favourites|0636207006|Slim Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£17.99",
+        redPrice: "£14.39",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "6",
+        swatches: [
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0636207006.html",
+            colorName: "Black",
+          },
+          {
+            colorCode: "#4C5164",
+            articleLink: "/en_gb/productpage.0636207001.html",
+            colorName: "Dark denim blue",
+          },
+          {
+            colorCode: "#666B75",
+            articleLink: "/en_gb/productpage.0636207005.html",
+            colorName: "Grey",
+          },
+          {
+            colorCode: "#79829D",
+            articleLink: "/en_gb/productpage.0636207010.html",
+            colorName: "Light denim blue",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0919365006",
+        onClick:
+          "setVCParameter('SEARCH','0919365006'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA5MTkzNjVfZ3JvdXBfMDA2X2VuX2diOzA5MTkzNjUwMDZfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0919365006'); setOsaParameters(utag_data.category_id,'SMALL','0919365006');",
+        link: "/en_gb/productpage.0919365006.html",
+        title: "Mom High Ankle Jeans",
+        category: "ladies_jeans_mom",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/e1/18/e118a8e116dd7fbac898985f26bb1f2824bade51.jpg],origin[dam],category[ladies_jeans_mom],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/70/ee/70ee49b5e05b232ef218f0b906cd329450271ac1.jpg],origin[dam],category[ladies_jeans_mom],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Mom High Ankle Jeans Model",
+            dataAltText: "Mom High Ankle Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking: "Favourites|0919365006|Mom High Ankle Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£19.99",
+        redPrice: "£15.99",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "5",
+        swatches: [
+          {
+            colorCode: "#333538",
+            articleLink: "/en_gb/productpage.0919365006.html",
+            colorName: "Black/Washed out",
+          },
+          {
+            colorCode: "#87A9D8",
+            articleLink: "/en_gb/productpage.0919365002.html",
+            colorName: "Light denim blue",
+          },
+          {
+            colorCode: "#71869E",
+            articleLink: "/en_gb/productpage.0919365003.html",
+            colorName: "Denim blue",
+          },
+          {
+            colorCode: "#4D6D9B",
+            articleLink: "/en_gb/productpage.0919365007.html",
+            colorName: "Dark denim blue",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0556560011",
+        onClick:
+          "setVCParameter('SEARCH','0556560011'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA1NTY1NjBfZ3JvdXBfMDExX2VuX2diOzA1NTY1NjAwMTFfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0556560011'); setOsaParameters(utag_data.category_id,'SMALL','0556560011');",
+        link: "/en_gb/productpage.0556560011.html",
+        title: "Skinny Fit Jeans",
+        category: "kids_boy8y_jeans_skinny",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/c0/69/c069418a7ea5847cb921174375e327d0c6ab3d03.jpg],origin[dam],category[kids_boy8y_jeans_skinny],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/cb/81/cb81207a23d409e959ca9cd68d438ab389e059d7.jpg],origin[dam],category[kids_boy8y_jeans_skinny],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Skinny Fit Jeans Model",
+            dataAltText: "Skinny Fit Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: true,
+        favouritesTracking: "Favourites|0556560011|Skinny Fit Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£6.99",
+        redPrice: "£5.59",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "2",
+        swatches: [
+          {
+            colorCode: "#54586D",
+            articleLink: "/en_gb/productpage.0556560011.html",
+            colorName: "Dark blue",
+          },
+          {
+            colorCode: "#94989F",
+            articleLink: "/en_gb/productpage.0556560009.html",
+            colorName: "Grey",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0860172003",
+        onClick:
+          "setVCParameter('SEARCH','0860172003'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA4NjAxNzJfZ3JvdXBfMDAzX2VuX2diOzA4NjAxNzIwMDNfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0860172003'); setOsaParameters(utag_data.category_id,'SMALL','0860172003');",
+        link: "/en_gb/productpage.0860172003.html",
+        title: "Skinny Fit Jeans",
+        category: "kids_boys14y_jeans_skinny",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/37/45/37452598f112b4cdba92a12bab8472009629bc7f.jpg],origin[dam],category[kids_boys14y_jeans_skinny],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/71/0a/710a0687493b0431d2fa472e770373269dd38d71.jpg],origin[dam],category[kids_boys14y_jeans_skinny],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Skinny Fit Jeans Model",
+            dataAltText: "Skinny Fit Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking: "Favourites|0860172003|Skinny Fit Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£17.99",
+        redPrice: "£14.39",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "6",
+        swatches: [
+          {
+            colorCode: "#4C5164",
+            articleLink: "/en_gb/productpage.0860172003.html",
+            colorName: "Dark denim blue",
+          },
+          {
+            colorCode: "#4C5164",
+            articleLink: "/en_gb/productpage.0860172001.html",
+            colorName: "Blue-black",
+          },
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0860172002.html",
+            colorName: "Black",
+          },
+          {
+            colorCode: "#79829D",
+            articleLink: "/en_gb/productpage.0860172004.html",
+            colorName: "Denim blue",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0636207001",
+        onClick:
+          "setVCParameter('SEARCH','0636207001'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA2MzYyMDdfZ3JvdXBfMDAxX2VuX2diOzA2MzYyMDcwMDFfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0636207001'); setOsaParameters(utag_data.category_id,'SMALL','0636207001');",
+        link: "/en_gb/productpage.0636207001.html",
+        title: "Slim Jeans",
+        category: "men_jeans_slim",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/8f/3b/8f3ba930c38916f481f211ba8021bd8119d26f0b.jpg],origin[dam],category[men_jeans_slim],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/36/49/3649b9506787743b7d4b0e5f8014d13946bf3632.jpg],origin[dam],category[men_jeans_slim],type[DESCRIPTIVESTILLLIFE],res[m],hmver[2]&call=url[file:/product/style]",
+            alt: "Slim Jeans Model",
+            dataAltText: "Slim Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: true,
+        favouritesTracking: "Favourites|0636207001|Slim Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£17.99",
+        redPrice: "£14.39",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "6",
+        swatches: [
+          {
+            colorCode: "#4C5164",
+            articleLink: "/en_gb/productpage.0636207001.html",
+            colorName: "Dark denim blue",
+          },
+          {
+            colorCode: "#666B75",
+            articleLink: "/en_gb/productpage.0636207005.html",
+            colorName: "Grey",
+          },
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0636207006.html",
+            colorName: "Black",
+          },
+          {
+            colorCode: "#79829D",
+            articleLink: "/en_gb/productpage.0636207010.html",
+            colorName: "Light denim blue",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0871889003",
+        onClick:
+          "setVCParameter('SEARCH','0871889003'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA4NzE4ODlfZ3JvdXBfMDAzX2VuX2diOzA4NzE4ODkwMDNfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0871889003'); setOsaParameters(utag_data.category_id,'SMALL','0871889003');",
+        link: "/en_gb/productpage.0871889003.html",
+        title: "Wide High Jeans",
+        category: "ladies_jeans_straight",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/14/2e/142ea7b77e60c60631f8f01f7f60c0e6e43b32d7.jpg],origin[dam],category[ladies_jeans_straight],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/fb/81/fb813e73924b71ddb934445731e60cabb0941e48.jpg],origin[dam],category[ladies_jeans_straight],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Wide High Jeans Model",
+            dataAltText: "Wide High Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking: "Favourites|0871889003|Wide High Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£24.99",
+        redPrice: "£19.99",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "3",
+        swatches: [
+          {
+            colorCode: "#79829D",
+            articleLink: "/en_gb/productpage.0871889003.html",
+            colorName: "Denim blue",
+          },
+          {
+            colorCode: "#BABFCC",
+            articleLink: "/en_gb/productpage.0871889001.html",
+            colorName: "Pale denim blue",
+          },
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0871889006.html",
+            colorName: "Black",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0573085028",
+        onClick:
+          "setVCParameter('SEARCH','0573085028'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA1NzMwODVfZ3JvdXBfMDI4X2VuX2diOzA1NzMwODUwMjhfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0573085028'); setOsaParameters(utag_data.category_id,'SMALL','0573085028');",
+        link: "/en_gb/productpage.0573085028.html",
+        title: "Skinny High Jeans",
+        category: "ladies_jeans_slim",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/fd/17/fd17ce87a5bfaea26884dbb3a8f096afadfe60c1.jpg],origin[dam],category[ladies_jeans_slim],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/96/19/96196a9c75770663ab3e62f66221549826cd9543.jpg],origin[dam],category[ladies_jeans_skinny],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Skinny High Jeans Model",
+            dataAltText: "Skinny High Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: true,
+        favouritesTracking: "Favourites|0573085028|Skinny High Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£17.99",
+        redPrice: "£14.39",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "3",
+        swatches: [
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0573085028.html",
+            colorName: "Black",
+          },
+          {
+            colorCode: "#79829D",
+            articleLink: "/en_gb/productpage.0573085043.html",
+            colorName: "Blue",
+          },
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0573085057.html",
+            colorName: "Black",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0881111001",
+        onClick:
+          "setVCParameter('SEARCH','0881111001'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA4ODExMTFfZ3JvdXBfMDAxX2VuX2diOzA4ODExMTEwMDFfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0881111001'); setOsaParameters(utag_data.category_id,'SMALL','0881111001');",
+        link: "/en_gb/productpage.0881111001.html",
+        title: "Shaping High Jeans",
+        category: "ladies_jeans_skinny",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/5f/04/5f047c25194bf92eaacc2fc4f9e1838e661649b6.jpg],origin[dam],category[ladies_jeans_skinny],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/e5/be/e5be8953e056c53f7846fd1cd7de8ddce9d08bbb.jpg],origin[dam],category[ladies_jeans_skinny],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Shaping High Jeans Model",
+            dataAltText: "Shaping High Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking: "Favourites|0881111001|Shaping High Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£39.99",
+        redPrice: "£31.99",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "6",
+        swatches: [
+          {
+            colorCode: "#35393A",
+            articleLink: "/en_gb/productpage.0881111001.html",
+            colorName: "Black/No fade black",
+          },
+          {
+            colorCode: "#383C4A",
+            articleLink: "/en_gb/productpage.0881111003.html",
+            colorName: "Blue-black",
+          },
+          {
+            colorCode: "#79829D",
+            articleLink: "/en_gb/productpage.0881111005.html",
+            colorName: "Denim blue",
+          },
+          {
+            colorCode: "#33363A",
+            articleLink: "/en_gb/productpage.0881111007.html",
+            colorName: "Black/Washed out",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0731520001",
+        onClick:
+          "setVCParameter('SEARCH','0731520001'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA3MzE1MjBfZ3JvdXBfMDAxX2VuX2diOzA3MzE1MjAwMDFfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0731520001'); setOsaParameters(utag_data.category_id,'SMALL','0731520001');",
+        link: "/en_gb/productpage.0731520001.html",
+        title: "Skinny Fit Jeans",
+        category: "kids_girl14y_jeans_skinny",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/1b/04/1b0423140cb069d21e68e555f71f90f95189fba5.jpg],origin[dam],category[kids_girl14y_jeans_skinny],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/89/7d/897d92e38c67950d961482394e430f3fa0490d17.jpg],origin[dam],category[kids_girl14y_jeans_skinny],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Skinny Fit Jeans Model",
+            dataAltText: "Skinny Fit Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: true,
+        favouritesTracking: "Favourites|0731520001|Skinny Fit Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£7.99",
+        redPrice: "£6.39",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "3",
+        swatches: [
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0731520001.html",
+            colorName: "Black",
+          },
+          {
+            colorCode: "#ADBAD1",
+            articleLink: "/en_gb/productpage.0731520002.html",
+            colorName: "Light blue",
+          },
+          {
+            colorCode: "#FFFFFF",
+            articleLink: "/en_gb/productpage.0731520005.html",
+            colorName: "White",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0941666002",
+        onClick:
+          "setVCParameter('SEARCH','0941666002'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA5NDE2NjZfZ3JvdXBfMDAyX2VuX2diOzA5NDE2NjYwMDJfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0941666002'); setOsaParameters(utag_data.category_id,'SMALL','0941666002');",
+        link: "/en_gb/productpage.0941666002.html",
+        title: "Slim Mom High Ankle Jeans",
+        category: "ladies_jeans_mom",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/a1/1b/a11bc7590fdfde9bdc8c776802251fc525ae77cf.jpg],origin[dam],category[ladies_jeans_mom],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/65/b9/65b9ef25c820dde5e95be6485c8e5d6ee7c758aa.jpg],origin[dam],category[ladies_jeans_mom],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Slim Mom High Ankle Jeans Model",
+            dataAltText: "Slim Mom High Ankle Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking:
+          "Favourites|0941666002|Slim Mom High Ankle Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£19.99",
+        redPrice: "£15.99",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "3",
+        swatches: [
+          {
+            colorCode: "#494A4F",
+            articleLink: "/en_gb/productpage.0941666002.html",
+            colorName: "Black",
+          },
+          {
+            colorCode: "#79829D",
+            articleLink: "/en_gb/productpage.0941666001.html",
+            colorName: "Denim blue",
+          },
+          {
+            colorCode: "#E8E4D5",
+            articleLink: "/en_gb/productpage.0941666003.html",
+            colorName: "Cream",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0554450001",
+        onClick:
+          "setVCParameter('SEARCH','0554450001'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA1NTQ0NTBfZ3JvdXBfMDAxX2VuX2diOzA1NTQ0NTAwMDFfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0554450001'); setOsaParameters(utag_data.category_id,'SMALL','0554450001');",
+        link: "/en_gb/productpage.0554450001.html",
+        title: "Super Skinny Regular Jeans",
+        category: "ladies_jeans_skinny_skinnyregular",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/6b/7b/6b7b55fd71189b256dccea5a642c511688c0dbcb.jpg],origin[dam],category[ladies_jeans_skinny_skinnyregular],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/95/76/9576f60e1fcb149ab2fde9cb15a669addc09c0ce.jpg],origin[dam],category[ladies_jeans_skinny_skinnyregular],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Super Skinny Regular Jeans Model",
+            dataAltText: "Super Skinny Regular Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: true,
+        favouritesTracking:
+          "Favourites|0554450001|Super Skinny Regular Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£14.99",
+        redPrice: "£11.99",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "6",
+        swatches: [
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0554450001.html",
+            colorName: "Black",
+          },
+          {
+            colorCode: "#333B5E",
+            articleLink: "/en_gb/productpage.0554450025.html",
+            colorName: "Dark denim blue",
+          },
+          {
+            colorCode: "#5F6475",
+            articleLink: "/en_gb/productpage.0554450036.html",
+            colorName: "Denim blue",
+          },
+          {
+            colorCode: "#C0C3C6",
+            articleLink: "/en_gb/productpage.0554450043.html",
+            colorName: "Dark grey",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0870822002",
+        onClick:
+          "setVCParameter('SEARCH','0870822002'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA4NzA4MjJfZ3JvdXBfMDAyX2VuX2diOzA4NzA4MjIwMDJfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0870822002'); setOsaParameters(utag_data.category_id,'SMALL','0870822002');",
+        link: "/en_gb/productpage.0870822002.html",
+        title: "Slim Straight Jeans",
+        category: "men_jeans_slim",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/39/f6/39f65413f348341511116eff48459c121671c058.jpg],origin[dam],category[men_jeans_slim],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/c3/de/c3de76b8121ab2887f92e4295b5ac0182e59be12.jpg],origin[dam],category[men_jeans_slim],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Slim Straight Jeans Model",
+            dataAltText: "Slim Straight Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking: "Favourites|0870822002|Slim Straight Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "Conscious",
+        marketingMarkerType: "marker-environment",
+        marketingMarkerCss: "",
+        price: "£24.99",
+        redPrice: "£19.99",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "2",
+        swatches: [
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0870822002.html",
+            colorName: "Black",
+          },
+          {
+            colorCode: "#7187BC",
+            articleLink: "/en_gb/productpage.0870822003.html",
+            colorName: "Denim blue",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0852748005",
+        onClick:
+          "setVCParameter('SEARCH','0852748005'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA4NTI3NDhfZ3JvdXBfMDA1X2VuX2diOzA4NTI3NDgwMDVfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0852748005'); setOsaParameters(utag_data.category_id,'SMALL','0852748005');",
+        link: "/en_gb/productpage.0852748005.html",
+        title: "Super Soft Skinny Fit Jeans",
+        category: "kids_boy8y_jeans_skinny",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/05/e9/05e97f92a1cc4450bdfd0275d6fa6f08783aec0a.jpg],origin[dam],category[kids_boy8y_jeans_skinny],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/51/b9/51b9fb314c7f712f1c432594a3ca3226cd9b1625.jpg],origin[dam],category[kids_boy8y_jeans_skinny],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Super Soft Skinny Fit Jeans Model",
+            dataAltText: "Super Soft Skinny Fit Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking:
+          "Favourites|0852748005|Super Soft Skinny Fit Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£14.99",
+        redPrice: "£11.99",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "5",
+        swatches: [
+          {
+            colorCode: "#4C5164",
+            articleLink: "/en_gb/productpage.0852748005.html",
+            colorName: "Dark denim blue",
+          },
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0852748001.html",
+            colorName: "Black/Washed out",
+          },
+          {
+            colorCode: "#8898AC",
+            articleLink: "/en_gb/productpage.0852748003.html",
+            colorName: "Light denim blue",
+          },
+          {
+            colorCode: "#94989F",
+            articleLink: "/en_gb/productpage.0852748004.html",
+            colorName: "Light grey",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0941666001",
+        onClick:
+          "setVCParameter('SEARCH','0941666001'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA5NDE2NjZfZ3JvdXBfMDAxX2VuX2diOzA5NDE2NjYwMDFfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0941666001'); setOsaParameters(utag_data.category_id,'SMALL','0941666001');",
+        link: "/en_gb/productpage.0941666001.html",
+        title: "Slim Mom High Ankle Jeans",
+        category: "ladies_jeans_mom",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/68/d4/68d42fc10d60284cb8c32e861f318cccc1c072ac.jpg],origin[dam],category[ladies_jeans_mom],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/79/a1/79a1f7a9632f63ff00275fbc53f0445072e6756b.jpg],origin[dam],category[ladies_jeans_mom],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Slim Mom High Ankle Jeans Model",
+            dataAltText: "Slim Mom High Ankle Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking:
+          "Favourites|0941666001|Slim Mom High Ankle Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£19.99",
+        redPrice: "£15.99",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "New Arrival",
+        swatchesTotal: "3",
+        swatches: [
+          {
+            colorCode: "#79829D",
+            articleLink: "/en_gb/productpage.0941666001.html",
+            colorName: "Denim blue",
+          },
+          {
+            colorCode: "#494A4F",
+            articleLink: "/en_gb/productpage.0941666002.html",
+            colorName: "Black",
+          },
+          {
+            colorCode: "#E8E4D5",
+            articleLink: "/en_gb/productpage.0941666003.html",
+            colorName: "Cream",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0720504010",
+        onClick:
+          "setVCParameter('SEARCH','0720504010'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA3MjA1MDRfZ3JvdXBfMDEwX2VuX2diOzA3MjA1MDQwMTBfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0720504010'); setOsaParameters(utag_data.category_id,'SMALL','0720504010');",
+        link: "/en_gb/productpage.0720504010.html",
+        title: "Skinny Jeans",
+        category: "men_jeans_skinny",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/1a/13/1a13536ec924f1c250751ae05a58e006f7a10e95.jpg],origin[dam],category[men_jeans_skinny],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/98/84/9884d039867488ee9d88a04734cc8a74280ba223.jpg],origin[dam],category[men_jeans_skinny],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Skinny Jeans Model",
+            dataAltText: "Skinny Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: true,
+        favouritesTracking: "Favourites|0720504010|Skinny Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£17.99",
+        redPrice: "£14.39",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "6",
+        swatches: [
+          {
+            colorCode: "#6089C2",
+            articleLink: "/en_gb/productpage.0720504010.html",
+            colorName: "Denim blue",
+          },
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0720504001.html",
+            colorName: "Black",
+          },
+          {
+            colorCode: "#4C5164",
+            articleLink: "/en_gb/productpage.0720504002.html",
+            colorName: "Dark denim blue",
+          },
+          {
+            colorCode: "#7187BC",
+            articleLink: "/en_gb/productpage.0720504007.html",
+            colorName: "Midnight blue",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0869868003",
+        onClick:
+          "setVCParameter('SEARCH','0869868003'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA4Njk4NjhfZ3JvdXBfMDAzX2VuX2diOzA4Njk4NjgwMDNfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0869868003'); setOsaParameters(utag_data.category_id,'SMALL','0869868003');",
+        link: "/en_gb/productpage.0869868003.html",
+        title: "Super Soft Skinny Fit Jeans",
+        category: "kids_girl14y_jeans_skinny",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/84/48/84489abc60e6ab3ecf20f4187fb4fa5c7de8b33c.jpg],origin[dam],category[kids_girl14y_jeans_skinny],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/c2/fb/c2fb52ab9fda3bf820a0e111554be5892bed37d2.jpg],origin[dam],category[kids_girl14y_jeans_skinny],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Super Soft Skinny Fit Jeans Model",
+            dataAltText: "Super Soft Skinny Fit Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking:
+          "Favourites|0869868003|Super Soft Skinny Fit Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£17.99",
+        redPrice: "£14.39",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "4",
+        swatches: [
+          {
+            colorCode: "#79829D",
+            articleLink: "/en_gb/productpage.0869868003.html",
+            colorName: "Blue",
+          },
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0869868001.html",
+            colorName: "Black",
+          },
+          {
+            colorCode: "#4C5164",
+            articleLink: "/en_gb/productpage.0869868002.html",
+            colorName: "Denim blue",
+          },
+          {
+            colorCode: "#8898AC",
+            articleLink: "/en_gb/productpage.0869868004.html",
+            colorName: "Light denim blue",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0914441002",
+        onClick:
+          "setVCParameter('SEARCH','0914441002'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA5MTQ0NDFfZ3JvdXBfMDAyX2VuX2diOzA5MTQ0NDEwMDJfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0914441002'); setOsaParameters(utag_data.category_id,'SMALL','0914441002');",
+        link: "/en_gb/productpage.0914441002.html",
+        title: "Curvy High Waist Jeggings",
+        category: "ladies_jeans",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/d0/80/d080a6613f6ce1e3939a4bdc32edf36ed50be003.jpg],origin[dam],category[ladies_jeans],type[LOOKBOOK],res[m],hmver[2]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/d6/fe/d6fe0ef9d1e004430e34e5091f9c5c7ae9370209.jpg],origin[dam],category[ladies_jeans],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Curvy High Waist Jeggings Model",
+            dataAltText: "Curvy High Waist Jeggings",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking:
+          "Favourites|0914441002|Curvy High Waist Jeggings|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£17.99",
+        redPrice: "£14.39",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "8",
+        swatches: [
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0914441002.html",
+            colorName: "Black/Coating",
+          },
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0914441001.html",
+            colorName: "Black",
+          },
+          {
+            colorCode: "#79829D",
+            articleLink: "/en_gb/productpage.0914441003.html",
+            colorName: "Light denim blue",
+          },
+          {
+            colorCode: "#79829D",
+            articleLink: "/en_gb/productpage.0914441004.html",
+            colorName: "Blue",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0875922018",
+        onClick:
+          "setVCParameter('SEARCH','0875922018'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA4NzU5MjJfZ3JvdXBfMDE4X2VuX2diOzA4NzU5MjIwMThfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0875922018'); setOsaParameters(utag_data.category_id,'SMALL','0875922018');",
+        link: "/en_gb/productpage.0875922018.html",
+        title: "Jeggings",
+        category: "kids_babygirl_trousersleggings",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/ec/f0/ecf0135c6aa8e336d73f36b34bc1167ae072d3e6.jpg],origin[dam],category[kids_babygirl_trousersleggings],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/ec/f0/ecf0135c6aa8e336d73f36b34bc1167ae072d3e6.jpg],origin[dam],category[kids_babygirl_trousersleggings],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Jeggings Model",
+            dataAltText: "Jeggings",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: true,
+        favouritesTracking: "Favourites|0875922018|Jeggings|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£5.99",
+        redPrice: "£4.79",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "New Arrival",
+        swatchesTotal: "5",
+        swatches: [
+          {
+            colorCode: "#BECCD8",
+            articleLink: "/en_gb/productpage.0875922018.html",
+            colorName: "Light denim blue",
+          },
+          {
+            colorCode: "#BECCD8",
+            articleLink: "/en_gb/productpage.0875922001.html",
+            colorName: "Light denim blue",
+          },
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0875922003.html",
+            colorName: "Charcoal grey",
+          },
+          {
+            colorCode: "#3E4D7D",
+            articleLink: "/en_gb/productpage.0875922009.html",
+            colorName: "Denim blue",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0922381001",
+        onClick:
+          "setVCParameter('SEARCH','0922381001'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA5MjIzODFfZ3JvdXBfMDAxX2VuX2diOzA5MjIzODEwMDFfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0922381001'); setOsaParameters(utag_data.category_id,'SMALL','0922381001');",
+        link: "/en_gb/productpage.0922381001.html",
+        title: "Mom High Ankle Jeans",
+        category: "ladies_jeans_mom",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/91/57/91576c71581f03643acf445966208a6bba3f6cab.jpg],origin[dam],category[ladies_jeans_mom],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/be/ec/beec441c5f3aa0f0d6e91e91d16532010bc06cce.jpg],origin[dam],category[ladies_jeans_mom],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Mom High Ankle Jeans Model",
+            dataAltText: "Mom High Ankle Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking: "Favourites|0922381001|Mom High Ankle Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£19.99",
+        redPrice: "£15.99",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "2",
+        swatches: [
+          {
+            colorCode: "#494A4F",
+            articleLink: "/en_gb/productpage.0922381001.html",
+            colorName: "Dark grey",
+          },
+          {
+            colorCode: "#3C4352",
+            articleLink: "/en_gb/productpage.0922381002.html",
+            colorName: "Blue-black",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0554450051",
+        onClick:
+          "setVCParameter('SEARCH','0554450051'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA1NTQ0NTBfZ3JvdXBfMDUxX2VuX2diOzA1NTQ0NTAwNTFfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0554450051'); setOsaParameters(utag_data.category_id,'SMALL','0554450051');",
+        link: "/en_gb/productpage.0554450051.html",
+        title: "Super Skinny Regular Jeans",
+        category: "ladies_jeans_skinny_skinnyregular",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/7c/92/7c92eafe40fa44e115238eefdb6d2c3d13ef3a02.jpg],origin[dam],category[ladies_jeans_skinny_skinnyregular],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/af/df/afdf979ee661661b04fb3951c7443f29b05c76bc.jpg],origin[dam],category[ladies_jeans_skinny_skinnyregular],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Super Skinny Regular Jeans Model",
+            dataAltText: "Super Skinny Regular Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: true,
+        favouritesTracking:
+          "Favourites|0554450051|Super Skinny Regular Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£14.99",
+        redPrice: "£11.99",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "6",
+        swatches: [
+          {
+            colorCode: "#A1AACF",
+            articleLink: "/en_gb/productpage.0554450051.html",
+            colorName: "Light blue",
+          },
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0554450001.html",
+            colorName: "Black",
+          },
+          {
+            colorCode: "#333B5E",
+            articleLink: "/en_gb/productpage.0554450025.html",
+            colorName: "Dark denim blue",
+          },
+          {
+            colorCode: "#5F6475",
+            articleLink: "/en_gb/productpage.0554450036.html",
+            colorName: "Denim blue",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0706016002",
+        onClick:
+          "setVCParameter('SEARCH','0706016002'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA3MDYwMTZfZ3JvdXBfMDAyX2VuX2diOzA3MDYwMTYwMDJfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0706016002'); setOsaParameters(utag_data.category_id,'SMALL','0706016002');",
+        link: "/en_gb/productpage.0706016002.html",
+        title: "Super Skinny High Jeans",
+        category: "ladies_jeans_skinny_skinnyhigh",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/8c/64/8c64d4d2bb57f9a371c75fcf1e44fdd9d4b42b33.jpg],origin[dam],category[ladies_jeans_skinny],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/51/7e/517ef738c12fddea6a2ba520a81cbf4e71c4ea22.jpg],origin[dam],category[ladies_jeans_skinny_skinnyhigh],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Super Skinny High Jeans Model",
+            dataAltText: "Super Skinny High Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking:
+          "Favourites|0706016002|Super Skinny High Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£14.99",
+        redPrice: "£11.99",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "14",
+        swatches: [
+          {
+            colorCode: "#8098CA",
+            articleLink: "/en_gb/productpage.0706016002.html",
+            colorName: "Light denim blue",
+          },
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0706016001.html",
+            colorName: "Black",
+          },
+          {
+            colorCode: "#54586D",
+            articleLink: "/en_gb/productpage.0706016003.html",
+            colorName: "Dark denim blue",
+          },
+          {
+            colorCode: "#333860",
+            articleLink: "/en_gb/productpage.0706016006.html",
+            colorName: "Denim blue",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0810169018",
+        onClick:
+          "setVCParameter('SEARCH','0810169018'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA4MTAxNjlfZ3JvdXBfMDE4X2VuX2diOzA4MTAxNjkwMThfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0810169018'); setOsaParameters(utag_data.category_id,'SMALL','0810169018');",
+        link: "/en_gb/productpage.0810169018.html",
+        title: "MAMA Super Skinny Jeans",
+        category: "ladies_maternity_jeans",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/40/fc/40fceaf567ff3b48025f0e9acbc1582101d12711.jpg],origin[dam],category[ladies_maternity_jeans],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/40/fc/40fceaf567ff3b48025f0e9acbc1582101d12711.jpg],origin[dam],category[ladies_maternity_jeans],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "MAMA Super Skinny Jeans Model",
+            dataAltText: "MAMA Super Skinny Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking:
+          "Favourites|0810169018|MAMA Super Skinny Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£24.99",
+        redPrice: "£19.99",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "7",
+        swatches: [
+          {
+            colorCode: "#6F778E",
+            articleLink: "/en_gb/productpage.0810169018.html",
+            colorName: "Blue",
+          },
+          {
+            colorCode: "#2F3748",
+            articleLink: "/en_gb/productpage.0810169002.html",
+            colorName: "Dark denim blue",
+          },
+          {
+            colorCode: "#494A4F",
+            articleLink: "/en_gb/productpage.0810169003.html",
+            colorName: "Dark grey",
+          },
+          {
+            colorCode: "#BDC5E4",
+            articleLink: "/en_gb/productpage.0810169016.html",
+            colorName: "Light denim blue",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0720504002",
+        onClick:
+          "setVCParameter('SEARCH','0720504002'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA3MjA1MDRfZ3JvdXBfMDAyX2VuX2diOzA3MjA1MDQwMDJfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0720504002'); setOsaParameters(utag_data.category_id,'SMALL','0720504002');",
+        link: "/en_gb/productpage.0720504002.html",
+        title: "Skinny Jeans",
+        category: "men_jeans_skinny",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/f5/1a/f51aa7ba88bbe0cb93ed30287cd95835f11926b2.jpg],origin[dam],category[men_jeans_skinny],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/bf/b4/bfb48ea70d7fcf18d822108cbe92b1edeb179bc5.jpg],origin[dam],category[men_jeans_skinny],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Skinny Jeans Model",
+            dataAltText: "Skinny Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: true,
+        favouritesTracking: "Favourites|0720504002|Skinny Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£17.99",
+        redPrice: "£14.39",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "6",
+        swatches: [
+          {
+            colorCode: "#4C5164",
+            articleLink: "/en_gb/productpage.0720504002.html",
+            colorName: "Dark denim blue",
+          },
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0720504001.html",
+            colorName: "Black",
+          },
+          {
+            colorCode: "#7187BC",
+            articleLink: "/en_gb/productpage.0720504007.html",
+            colorName: "Midnight blue",
+          },
+          {
+            colorCode: "#666B75",
+            articleLink: "/en_gb/productpage.0720504008.html",
+            colorName: "Dark grey",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0860172002",
+        onClick:
+          "setVCParameter('SEARCH','0860172002'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA4NjAxNzJfZ3JvdXBfMDAyX2VuX2diOzA4NjAxNzIwMDJfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0860172002'); setOsaParameters(utag_data.category_id,'SMALL','0860172002');",
+        link: "/en_gb/productpage.0860172002.html",
+        title: "Skinny Fit Jeans",
+        category: "kids_boys14y_jeans_skinny",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/a4/ee/a4eef502c9c086b6b5f26a27e9503b94ab0586e4.jpg],origin[dam],category[kids_boys14y_jeans_skinny],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/e6/d7/e6d74c873c9489d65faa805f66d25555d23a590e.jpg],origin[dam],category[kids_boys14y_jeans_skinny],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Skinny Fit Jeans Model",
+            dataAltText: "Skinny Fit Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking: "Favourites|0860172002|Skinny Fit Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£17.99",
+        redPrice: "£14.39",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "6",
+        swatches: [
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0860172002.html",
+            colorName: "Black",
+          },
+          {
+            colorCode: "#4C5164",
+            articleLink: "/en_gb/productpage.0860172001.html",
+            colorName: "Blue-black",
+          },
+          {
+            colorCode: "#4C5164",
+            articleLink: "/en_gb/productpage.0860172003.html",
+            colorName: "Dark denim blue",
+          },
+          {
+            colorCode: "#79829D",
+            articleLink: "/en_gb/productpage.0860172004.html",
+            colorName: "Denim blue",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0871889001",
+        onClick:
+          "setVCParameter('SEARCH','0871889001'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA4NzE4ODlfZ3JvdXBfMDAxX2VuX2diOzA4NzE4ODkwMDFfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0871889001'); setOsaParameters(utag_data.category_id,'SMALL','0871889001');",
+        link: "/en_gb/productpage.0871889001.html",
+        title: "Wide High Jeans",
+        category: "ladies_jeans_straight",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/3b/24/3b24d74f81d3e0bc0d9e290890e8865e57762f3f.jpg],origin[dam],category[ladies_jeans_straight],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/84/8c/848c231107ab8cf06f700513bf1b890bdca75b2d.jpg],origin[dam],category[ladies_jeans_straight],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Wide High Jeans Model",
+            dataAltText: "Wide High Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking: "Favourites|0871889001|Wide High Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£24.99",
+        redPrice: "£19.99",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "3",
+        swatches: [
+          {
+            colorCode: "#BABFCC",
+            articleLink: "/en_gb/productpage.0871889001.html",
+            colorName: "Pale denim blue",
+          },
+          {
+            colorCode: "#79829D",
+            articleLink: "/en_gb/productpage.0871889003.html",
+            colorName: "Denim blue",
+          },
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0871889006.html",
+            colorName: "Black",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0309864012",
+        onClick:
+          "setVCParameter('SEARCH','0309864012'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzAzMDk4NjRfZ3JvdXBfMDEyX2VuX2diOzAzMDk4NjQwMTJfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0309864012'); setOsaParameters(utag_data.category_id,'SMALL','0309864012');",
+        link: "/en_gb/productpage.0309864012.html",
+        title: "Skinny Fit Jeans",
+        category: "kids_boys14y_jeans_skinny",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/4b/74/4b742937d6bba4d4f23ccd3be1aa2c4e921cad07.jpg],origin[dam],category[kids_boys14y_jeans_skinny],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/4a/65/4a65f182b9b6c4dc242b782b273a8fc0eaeb936b.jpg],origin[dam],category[kids_boys14y_jeans_skinny],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Skinny Fit Jeans Model",
+            dataAltText: "Skinny Fit Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: true,
+        favouritesTracking: "Favourites|0309864012|Skinny Fit Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£7.99",
+        redPrice: "£6.39",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "4",
+        swatches: [
+          {
+            colorCode: "#4C5164",
+            articleLink: "/en_gb/productpage.0309864012.html",
+            colorName: "Denim blue",
+          },
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0309864002.html",
+            colorName: "Black",
+          },
+          {
+            colorCode: "#94989F",
+            articleLink: "/en_gb/productpage.0309864013.html",
+            colorName: "Light grey",
+          },
+          {
+            colorCode: "#79829D",
+            articleLink: "/en_gb/productpage.0309864016.html",
+            colorName: "Blue",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0799365015",
+        onClick:
+          "setVCParameter('SEARCH','0799365015'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA3OTkzNjVfZ3JvdXBfMDE1X2VuX2diOzA3OTkzNjUwMTVfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0799365015'); setOsaParameters(utag_data.category_id,'SMALL','0799365015');",
+        link: "/en_gb/productpage.0799365015.html",
+        title: "Vintage Slim High Ankle Jeans",
+        category: "ladies_jeans_slim",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/06/29/062922e6442451e8d700e723b587696d13c1b62b.jpg],origin[dam],category[ladies_jeans_slim],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/06/29/062922e6442451e8d700e723b587696d13c1b62b.jpg],origin[dam],category[ladies_jeans_slim],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Vintage Slim High Ankle Jeans Model",
+            dataAltText: "Vintage Slim High Ankle Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking:
+          "Favourites|0799365015|Vintage Slim High Ankle Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£24.99",
+        redPrice: "£19.99",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "6",
+        swatches: [
+          {
+            colorCode: "#8898AC",
+            articleLink: "/en_gb/productpage.0799365015.html",
+            colorName: "Light denim blue",
+          },
+          {
+            colorCode: "#E8E0C9",
+            articleLink: "/en_gb/productpage.0799365001.html",
+            colorName: "Cream",
+          },
+          {
+            colorCode: "#798DB2",
+            articleLink: "/en_gb/productpage.0799365002.html",
+            colorName: "Denim blue",
+          },
+          {
+            colorCode: "#79829D",
+            articleLink: "/en_gb/productpage.0799365004.html",
+            colorName: "Denim blue",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0901676001",
+        onClick:
+          "setVCParameter('SEARCH','0901676001'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA5MDE2NzZfZ3JvdXBfMDAxX2VuX2diOzA5MDE2NzYwMDFfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0901676001'); setOsaParameters(utag_data.category_id,'SMALL','0901676001');",
+        link: "/en_gb/productpage.0901676001.html",
+        title: "Mom High Ankle Jeans",
+        category: "ladies_jeans_mom",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/7f/d3/7fd35a760c3e4f3f3e0bde72f1a4d734cd6f3acd.jpg],origin[dam],category[ladies_jeans_mom],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/39/e8/39e8ae8e1fcdd37cda208c0ce886f916e53d680e.jpg],origin[dam],category[ladies_jeans_mom],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Mom High Ankle Jeans Model",
+            dataAltText: "Mom High Ankle Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking: "Favourites|0901676001|Mom High Ankle Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£24.99",
+        redPrice: "£19.99",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "New Arrival",
+        swatchesTotal: "1",
+        swatches: [
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0901676001.html",
+            colorName: "Black/Coating",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0881112001",
+        onClick:
+          "setVCParameter('SEARCH','0881112001'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA4ODExMTJfZ3JvdXBfMDAxX2VuX2diOzA4ODExMTIwMDFfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0881112001'); setOsaParameters(utag_data.category_id,'SMALL','0881112001');",
+        link: "/en_gb/productpage.0881112001.html",
+        title: "Shaping Skinny Regular Jeans",
+        category: "ladies_jeans_skinny",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/7b/e6/7be67b371a52da0f57dccfa9ee2a6a2320d09d90.jpg],origin[dam],category[ladies_jeans_skinny],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/b5/42/b542db90ee08d50f3a4805a25f636a8c98af2117.jpg],origin[dam],category[ladies_jeans_skinny],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Shaping Skinny Regular Jeans Model",
+            dataAltText: "Shaping Skinny Regular Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking:
+          "Favourites|0881112001|Shaping Skinny Regular Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£39.99",
+        redPrice: "£31.99",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "5",
+        swatches: [
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0881112001.html",
+            colorName: "Black",
+          },
+          {
+            colorCode: "#42444B",
+            articleLink: "/en_gb/productpage.0881112002.html",
+            colorName: "Denim grey",
+          },
+          {
+            colorCode: "#3C4352",
+            articleLink: "/en_gb/productpage.0881112003.html",
+            colorName: "Dark denim blue",
+          },
+          {
+            colorCode: "#79829D",
+            articleLink: "/en_gb/productpage.0881112004.html",
+            colorName: "Denim blue",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0919365007",
+        onClick:
+          "setVCParameter('SEARCH','0919365007'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA5MTkzNjVfZ3JvdXBfMDA3X2VuX2diOzA5MTkzNjUwMDdfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0919365007'); setOsaParameters(utag_data.category_id,'SMALL','0919365007');",
+        link: "/en_gb/productpage.0919365007.html",
+        title: "Mom High Ankle Jeans",
+        category: "ladies_jeans_mom",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/29/f3/29f3198ae3637040f96e16da654766eaeda4b461.jpg],origin[dam],category[ladies_jeans_mom],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/9b/bd/9bbd022b9ec800793231d1dc44cdceb97efa82a1.jpg],origin[dam],category[ladies_jeans_mom],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Mom High Ankle Jeans Model",
+            dataAltText: "Mom High Ankle Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking: "Favourites|0919365007|Mom High Ankle Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£19.99",
+        redPrice: "£15.99",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "5",
+        swatches: [
+          {
+            colorCode: "#4D6D9B",
+            articleLink: "/en_gb/productpage.0919365007.html",
+            colorName: "Dark denim blue",
+          },
+          {
+            colorCode: "#87A9D8",
+            articleLink: "/en_gb/productpage.0919365002.html",
+            colorName: "Light denim blue",
+          },
+          {
+            colorCode: "#71869E",
+            articleLink: "/en_gb/productpage.0919365003.html",
+            colorName: "Denim blue",
+          },
+          {
+            colorCode: "#333538",
+            articleLink: "/en_gb/productpage.0919365006.html",
+            colorName: "Black/Washed out",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0871889006",
+        onClick:
+          "setVCParameter('SEARCH','0871889006'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA4NzE4ODlfZ3JvdXBfMDA2X2VuX2diOzA4NzE4ODkwMDZfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0871889006'); setOsaParameters(utag_data.category_id,'SMALL','0871889006');",
+        link: "/en_gb/productpage.0871889006.html",
+        title: "Wide High Jeans",
+        category: "ladies_jeans_straight",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/bb/93/bb93dd14417c443a9b519fc2157645063a138cd7.jpg],origin[dam],category[ladies_jeans_straight],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/83/e8/83e8d3964dac1e120ffb7d338cafcf98449f0215.jpg],origin[dam],category[ladies_jeans_straight],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Wide High Jeans Model",
+            dataAltText: "Wide High Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking: "Favourites|0871889006|Wide High Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£24.99",
+        redPrice: "£19.99",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "3",
+        swatches: [
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0871889006.html",
+            colorName: "Black",
+          },
+          {
+            colorCode: "#BABFCC",
+            articleLink: "/en_gb/productpage.0871889001.html",
+            colorName: "Pale denim blue",
+          },
+          {
+            colorCode: "#79829D",
+            articleLink: "/en_gb/productpage.0871889003.html",
+            colorName: "Denim blue",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0831939004",
+        onClick:
+          "setVCParameter('SEARCH','0831939004'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA4MzE5MzlfZ3JvdXBfMDA0X2VuX2diOzA4MzE5MzkwMDRfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0831939004'); setOsaParameters(utag_data.category_id,'SMALL','0831939004');",
+        link: "/en_gb/productpage.0831939004.html",
+        title: "Superstretch Skinny Fit Jeans",
+        category: "kids_girl14y_jeans_skinny",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/6b/f0/6bf00aebf8d5c2387615f2dcb603c50906e63aaa.jpg],origin[dam],category[kids_girl14y_jeans_skinny],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/a2/ed/a2ed3623b08c175d4ed117cec81a5ba87c39c0b4.jpg],origin[dam],category[kids_girl14y_jeans_skinny],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Superstretch Skinny Fit Jeans Model",
+            dataAltText: "Superstretch Skinny Fit Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking:
+          "Favourites|0831939004|Superstretch Skinny Fit Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£14.99",
+        redPrice: "£11.99",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "5",
+        swatches: [
+          {
+            colorCode: "#2E2E30",
+            articleLink: "/en_gb/productpage.0831939004.html",
+            colorName: "Black/Washed out",
+          },
+          {
+            colorCode: "#79829D",
+            articleLink: "/en_gb/productpage.0831939001.html",
+            colorName: "Denim blue",
+          },
+          {
+            colorCode: "#8898AC",
+            articleLink: "/en_gb/productpage.0831939002.html",
+            colorName: "Light denim blue",
+          },
+          {
+            colorCode: "#4C5164",
+            articleLink: "/en_gb/productpage.0831939003.html",
+            colorName: "Dark denim blue",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0810169002",
+        onClick:
+          "setVCParameter('SEARCH','0810169002'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA4MTAxNjlfZ3JvdXBfMDAyX2VuX2diOzA4MTAxNjkwMDJfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0810169002'); setOsaParameters(utag_data.category_id,'SMALL','0810169002');",
+        link: "/en_gb/productpage.0810169002.html",
+        title: "MAMA Super Skinny Jeans",
+        category: "ladies_maternity_jeans",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/1a/f5/1af5017ac7615c2f969f73e178ca0c3c39847a75.jpg],origin[dam],category[ladies_maternity_jeans],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/f6/07/f6073d5df9b97fd2b6c9b969062e1390ed7fb424.jpg],origin[dam],category[ladies_maternity_jeans],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "MAMA Super Skinny Jeans Model",
+            dataAltText: "MAMA Super Skinny Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking:
+          "Favourites|0810169002|MAMA Super Skinny Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£24.99",
+        redPrice: "£19.99",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "7",
+        swatches: [
+          {
+            colorCode: "#2F3748",
+            articleLink: "/en_gb/productpage.0810169002.html",
+            colorName: "Dark denim blue",
+          },
+          {
+            colorCode: "#494A4F",
+            articleLink: "/en_gb/productpage.0810169003.html",
+            colorName: "Dark grey",
+          },
+          {
+            colorCode: "#BDC5E4",
+            articleLink: "/en_gb/productpage.0810169016.html",
+            colorName: "Light denim blue",
+          },
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0810169017.html",
+            colorName: "Black",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0852785002",
+        onClick:
+          "setVCParameter('SEARCH','0852785002'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA4NTI3ODVfZ3JvdXBfMDAyX2VuX2diOzA4NTI3ODUwMDJfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0852785002'); setOsaParameters(utag_data.category_id,'SMALL','0852785002');",
+        link: "/en_gb/productpage.0852785002.html",
+        title: "Super Soft Skinny Fit Jeans",
+        category: "kids_boys14y_jeans_skinny",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/6a/d7/6ad7bbb371d293f753d2e3b1692d84cddbabbc8f.jpg],origin[dam],category[kids_boys14y_jeans_skinny],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/16/1c/161c5428635869e1bc2e5902e97d8be0f45c614b.jpg],origin[dam],category[kids_boys14y_jeans_skinny],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Super Soft Skinny Fit Jeans Model",
+            dataAltText: "Super Soft Skinny Fit Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking:
+          "Favourites|0852785002|Super Soft Skinny Fit Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£17.99",
+        redPrice: "£14.39",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "2",
+        swatches: [
+          {
+            colorCode: "#666B75",
+            articleLink: "/en_gb/productpage.0852785002.html",
+            colorName: "Dark grey/Washed out",
+          },
+          {
+            colorCode: "#4C5164",
+            articleLink: "/en_gb/productpage.0852785003.html",
+            colorName: "Dark denim blue",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0920929002",
+        onClick:
+          "setVCParameter('SEARCH','0920929002'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzA5MjA5MjlfZ3JvdXBfMDAyX2VuX2diOzA5MjA5MjkwMDJfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0920929002'); setOsaParameters(utag_data.category_id,'SMALL','0920929002');",
+        link: "/en_gb/productpage.0920929002.html",
+        title: "Mom Loose-fit High Jeans",
+        category: "ladies_jeans_mom",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/45/52/45526c4b2737f1a6a60c824c378a7033b45c26f5.jpg],origin[dam],category[ladies_jeans_mom],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/84/86/8486e3c0ca4884b326efef6cb79a8a0249dd276a.jpg],origin[dam],category[ladies_jeans_mom],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Mom Loose-fit High Jeans Model",
+            dataAltText: "Mom Loose-fit High Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: false,
+        favouritesTracking:
+          "Favourites|0920929002|Mom Loose-fit High Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£24.99",
+        redPrice: "£19.99",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "2",
+        swatches: [
+          {
+            colorCode: "#829EC3",
+            articleLink: "/en_gb/productpage.0920929002.html",
+            colorName: "Light denim blue",
+          },
+          {
+            colorCode: "#3F3F42",
+            articleLink: "/en_gb/productpage.0920929001.html",
+            colorName: "Dark grey",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+      {
+        articleCode: "0309864016",
+        onClick:
+          "setVCParameter('SEARCH','0309864016'); setNotificationTicket('Oy9zZWFyY2gvc2VhcmNoLWhpdHMtd2l0aC1jb3VudC9zZWFyY2gtaGl0czsjO3Byb2R1Y3Rfa2V5OzAzMDk4NjRfZ3JvdXBfMDE2X2VuX2diOzAzMDk4NjQwMTZfZW5fZ2I7T0JKRUNUSVZFJDtOT05FOk5PTkU7NDs','0309864016'); setOsaParameters(utag_data.category_id,'SMALL','0309864016');",
+        link: "/en_gb/productpage.0309864016.html",
+        title: "Skinny Fit Jeans",
+        category: "kids_boys14y_jeans_skinny",
+        image: [
+          {
+            src:
+              "//lp2.hm.com/hmgoepprod?set=source[/bd/4f/bd4f6c6c5ae68f46e7ce7a9cb8e7da0463d43334.jpg],origin[dam],category[kids_boys14y_jeans_skinny],type[LOOKBOOK],res[m],hmver[1]&call=url[file:/product/style]",
+            dataAltImage:
+              "//lp2.hm.com/hmgoepprod?set=source[/d4/4b/d44b59f9d355addc8312d411985a03e67104341e.jpg],origin[dam],category[kids_boys14y_jeans_skinny],type[DESCRIPTIVESTILLLIFE],res[m],hmver[1]&call=url[file:/product/style]",
+            alt: "Skinny Fit Jeans Model",
+            dataAltText: "Skinny Fit Jeans",
+          },
+        ],
+        legalText: "",
+        promotionalMarkerText: "",
+        showPromotionalClubMarker: false,
+        showPriceMarker: true,
+        favouritesTracking: "Favourites|0309864016|Skinny Fit Jeans|SEARCH",
+        favouritesSavedText: "SAVED AS FAVOURITE",
+        favouritesNotSavedText: "SAVE AS FAVOURITE",
+        marketingMarkerText: "",
+        marketingMarkerType: "",
+        marketingMarkerCss: "",
+        price: "£7.99",
+        redPrice: "£6.39",
+        yellowPrice: "",
+        bluePrice: "",
+        clubPriceText: "",
+        sellingAttribute: "",
+        swatchesTotal: "4",
+        swatches: [
+          {
+            colorCode: "#79829D",
+            articleLink: "/en_gb/productpage.0309864016.html",
+            colorName: "Blue",
+          },
+          {
+            colorCode: "#272628",
+            articleLink: "/en_gb/productpage.0309864002.html",
+            colorName: "Black",
+          },
+          {
+            colorCode: "#4C5164",
+            articleLink: "/en_gb/productpage.0309864012.html",
+            colorName: "Denim blue",
+          },
+          {
+            colorCode: "#94989F",
+            articleLink: "/en_gb/productpage.0309864013.html",
+            colorName: "Light grey",
+          },
+        ],
+        preAccessStartDate: "",
+        preAccessEndDate: "",
+        preAccessGroups: [],
+        outOfStockText: "",
+        comingSoon: "",
+      },
+    ],
+    labels: {
+      filterBy: "Filter by",
+      totalCount: "625 Items",
+      showItemsText: "Show 625 Items",
+      loadMoreText: "SHOWING 40 of 625 Items",
+    },
+    datatracking: {
+      filterUsed:
+        'FILTER_CHANGED|Filter used|FILTER|SEARCH_PAGE|SEARCH|"NONE"|""|"NONE"|"NONE"|"NONE"|"NONE"',
+      filterChanged:
+        'FILTER_CHANGED|Filter removed|FILTER|SEARCH_PAGE|SEARCH|"NONE"|"NONE"|"NONE"|"NONE"|"NONE"|"NONE"',
+      filterRemoved:
+        'FILTER_CHANGED|Filter removed|FILTER|SEARCH_PAGE|SEARCH|"NONE"|"NONE"|"NONE"|"NONE"|"NONE"|"NONE"',
+      loadMoreProducts:
+        "LOAD_MORE_PRODUCTS|Load more products button clicked|Product list interactions|SEARCH_PAGE",
+    },
+  };
+})();

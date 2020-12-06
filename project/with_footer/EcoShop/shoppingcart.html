@@ -1,0 +1,155 @@
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="cart.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script type="text/javascript" src="cart.js"></script>
+  <title>Basket</title>
+</head>
+
+<body>
+  <!-------------------------------------------------------------------------------------------------------------->
+  <div class="navBox">
+    <button id="Navigation"  type="button">
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+</button>
+</div>
+
+<!-------------------------------------------------------------------------------------------------------------->
+<div class="navBox">
+<!----------------------------------------------------------------------->
+<section id="Main">   
+      <div id = "Account" class="menuBox" >
+           <a class="Text"  href="">Account</a>
+      </div>
+    <!------------------------------------------------------------------>
+       <div id = "System" class="menuBox" >
+           <a class="Text">Our<br>recycling<br>system</a>
+       </div>
+    <!------------------------------------------------------------------>
+       <div id = "EcoShop" class="menuBox" >
+           <a class="Text" href="products.html">Eco<br>Shop</a>
+       </div>
+    <!------------------------------------------------------------------>
+       <div id = "Scanner" class="menuBox" >
+           <a class="Text" href="">Log in/<br>Sign up</a>
+       </div>
+</section>
+<!----------------------------------------------------------------------->
+        <section id="HomeDropdown"> 
+             <div id = "MyAccount" class="menuBox" >
+                 <a class="Text">My<br>Account</a>
+             </div>
+             <div id = "Home" class="menuBox" >
+                 <a class="Text" href="">Home</a>
+             </div>
+            </section>
+    <!------------------------------------------------------------------->
+        <section id="RecycleDropdown">
+             <div id = "AboutScan" class="menuBox" >
+                 <a class="Text" href="">Start<br>Scanning</a>
+             </div>
+             <div id = "Map" class="menuBox" >
+                 <a class="Text" href="">Where<br>to recycle</a>
+             </div>
+        </section>
+<!----------------------------------------------------------------------->    
+</div>
+<!----------------------------------------------------------------------->
+  <main>
+    <div class="basket">
+      <div class="basket-module">
+        <label class="promo-code" style="font-size: 0.90rem;">Enter a promotional code</label>
+        <input id="promo-code" type="text" name="promo-code" maxlength="5" class="promo-code-field" style="font-size: 0.95rem;">
+        <button class="promo-code-cta" style="font-size: 0.95rem;">Apply</button>
+      </div>
+      <div class="basket-labels">
+        <ul>
+          <li class="item item-heading">Item</li>
+          <li class="price">Price</li>
+          <li class="quantity">Quantity</li>
+          <li class="subtotal">Subtotal</li>
+        </ul>
+      </div>
+      <div class="basket-product">
+        <div class="item">
+          <div class="product-image">
+            <img src="http://placehold.it/120x166" alt="Placholder Image 2" class="product-frame">
+          </div>
+          <div class="product-details">
+            <h1><strong><span class="item-quantity">4</span> x Eliza J</strong> Lace Sleeve Cuff Dress</h1>
+            <p><strong>Navy, Size S</strong></p>
+            <p>Product Code - 232321939</p>
+          </div>
+        </div>
+        <div class="price">26.00</div>
+        <div class="quantity">
+          <input type="number" value="4" min="1" class="quantity-field">
+        </div>
+        <div class="subtotal">104.00</div>
+        <div class="remove">
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="basket-product">
+        <div class="item">
+          <div class="product-image">
+            <img src="http://placehold.it/120x166" alt="Placholder Image 2" class="product-frame">
+          </div>
+          <div class="product-details">
+            <h1><strong><span class="item-quantity">1</span> x Whistles</strong> Amella Lace Midi Dress</h1>
+            <p><strong>Navy, Size M</strong></p>
+            <p>Product Code - 232321939</p>
+          </div>
+        </div>
+        <div class="price">26.00</div>
+        <div class="quantity">
+          <input type="number" value="1" min="1" class="quantity-field">
+        </div>
+        <div class="subtotal">26.00</div>
+        <div class="remove">
+          <button>Remove</button> 
+        </div>
+      </div>
+    </div>
+    <aside>
+      <div class="summary">
+        <div class="summary-total-items" style="font-size: 1.6rem;"><span class="total-items"></span> Items in your Bag</div>
+        <div class="summary-subtotal">
+          <div class="subtotal-title">Subtotal</div>
+          <div class="subtotal-value final-value" id="basket-subtotal">130.00</div>
+          <div class="summary-promo hide">
+            <div class="promo-title">Promotion</div>
+            <div class="promo-value final-value" id="basket-promo"></div>
+          </div>
+        </div>
+        <div class="summary-delivery">
+          <select name="delivery-collection" class="summary-delivery-selection">
+              <option value="0" selected="selected">Select Collection or Delivery</option>
+             <option value="collection">Collection</option>
+             <option value="first-class">Royal Mail Standard Delivery 3.90</option>
+             
+          </select>
+        </div>
+        <div class="summary-total">
+          <div class="total-title">Total</div>
+          <div class="total-value final-value" id="basket-total">130.00</div>
+        </div>
+       
+
+          <a class="summary-checkout" href="checkout.html">
+            <button class="checkout-cta">Go to Secure Checkout</button>
+          </a>
+        </div>
+
+      </div>
+    </aside>
+  </main>
+</body>
+</html>

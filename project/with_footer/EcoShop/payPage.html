@@ -1,0 +1,48 @@
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="HandheldFriendly" content="true"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="payPage.js"></script>
+<link rel="stylesheet" href="checkout.css" />
+
+<div class="wrapper">
+  <div class="payment">
+    <div class="eco-logo">
+      <img class="logo" src="logo.png">
+    </div>
+    <h2>Payment Gateway</h2>
+    <div class="form">
+      <div class="card space icon-relative">
+        <label class="card-holder">Card holder:</label>
+        <input type="text" class="input" id="inputUser" placeholder="First and Last Name">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="card space icon-relative">
+        <label class="card-number">Card number:</label>
+        <input type="text" class="input" id="cardNum" data-mask="0000 0000 0000 0000" placeholder="Card Number" id="cardNum">
+        <i class="far fa-credit-card"></i>
+      </div>
+      <div class="card-grp space">
+        <div class="card-item icon-relative">
+          <label class="exp-date">Expiry date:</label>
+          <input type="text" name="expiry-data" class="input" id="expDate"  placeholder="00 / 00">
+          <i class="far fa-calendar-alt"></i>
+        </div>
+        <div class="card-item icon-relative">
+          <label class="cvc">CVC:</label>
+          <input type="text" class="input" data-mask="000" placeholder="000" id="cvc">
+          <i class="fas fa-lock"></i>
+        </div>
+      </div>
+        
+      <a href = "successfulPayment.html" id="pay" class="pay-btn">
+        Pay
+      </a> 
+      
+    </div>
+  </div>
+</div>
